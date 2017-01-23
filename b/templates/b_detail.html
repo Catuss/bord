@@ -1,0 +1,74 @@
+{% extends 'main.html' %}
+{% load bbcode_tags %}
+{% load thumbnail %}
+
+{% block additional_js %}
+<script>
+    var thread_pk = '{{thread.pk}}';
+</script>
+{% endblock %}
+
+{% block title %}/b/ - {{ thread.thread_text|slice:":25" }} {% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="b_logo">
+        <h2>/b/ - Logo</h2>
+    </div>    
+</div>
+<span class="controll_link">
+    <a href="#up_link" id="down_link" class='down_link'>Вниз</a>
+    <a href="" class="show_form_link">Открыть форму</a>
+</span>
+<div class="container-fluid post">
+    <div class="row post_head">
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+            <h5>
+                <span class="anon">Анонимус</span>  
+                {{ thread.thread_date|date:"l d M Y" }}
+                  № <a id='{{thread.thread_id}}' class="id_link">{{ thread.thread_id }}</a>
+            <span class="glyphicon glyphicon-exclamation-sign send_complaint" post="{{thread.thread_id}}"></span>
+            </h5>
+        </div>
+    </div>
+    <div class="row post_content">
+        <span class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+            <a href="{{thread.thread_media.url}}" class="media_content">
+                <img src="{{ thread.thread_media|thumbnail_url:'list' }}" class="thread_img">
+            </a>
+        </span>
+        <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+            {{ thread.thread_text|bbcode|safe }}
+        </span>
+    </div>
+    <div class="row responses">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h5 id="res_{{q.post_id}}">
+                {% if thread.responses_set.all %}
+                    Ответы:
+                    {% for j in thread.responses_set.all %}
+                        <a href=#{{j}} class="link_show_thread" conid='{{j}}'>>>{{j}}</a>
+                    {% endfor %}
+                {% endif %}    
+            </h5>
+        </div>    
+    </div>
+</div>
+
+<div class="container-fluid post_list">
+
+</div>
+<div id="controll_link_down">
+    <a href="#down_link" id='up_link'>Вверх</a>
+    <a href="#up_link" class="upd_link" pk='{{thread.pk}}'>Обновить</a>
+    <a href="" class="show_form_link">Открыть форму</a>
+</div>
+{% endblock %}
+
+{% block left %}
+<div class="controll_link_left">
+    <a href="#up_link" class="down_link">Вниз</a>
+    <a href="" class="upd_link" pk='{{thread.pk}}'>Обновить</a>
+    <a href="" class="show_form_link">Открыть форму</a>
+</div>
+{% endblock %}

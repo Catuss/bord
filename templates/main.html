@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="conteiter-fluid">
+	<div class="row">
+		<div class="col-lg-2 col-md-1" id='left'>
+			{% block left %}
+			{% endblock %}
+		</div>	
+		<div class="col-lg-8 col-md-10 col-sm-12 col-xs-12" id='main_area'>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id='col_header_navbar'>
+					<span class="col-md-3 col-lg-3 col-sm-3 nav_link"><a href="{% url 'list_thread' %}">На главную</a></span>
+					<span class="col-md-3 col-lg-3 col-sm-3 nav_link"><a href="{% url 'faq' %}"> FAQ по разметке</a></span>
+					<span class="col-md-3 col-lg-3 col-sm-3 nav_link"><a href="{% url 'list_thread' %}"></a></span>
+					<span class="col-md-3 col-lg-3 col-sm-3 nav_link"><a href="{% url 'list_thread' %}"></a></span>
+				</div>
+
+				
+
+			</div>
+
+			<hr class="my_hr">
+
+			<div class="row">
+				<span class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id='bord_list'>
+					<a href="{% url 'list_thread' %}">/b/</a>
+					<hr class="my_hr">
+				</span>
+			</div>
+			{% block main %}
+			{% endblock %}
+			<hr>
+			<div class="row foot">
+				<span class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h5>Спасибо за участие в тестировании</h5>
+				</span>
+			</div>
+	</div>
+
+	<div class="col-lg-2 col-md-1" id='right'>
+		{% block right %}
+		{% endblock %}
+	</div>
+
+</div> {# конец fluid'a #}
+
+<div id="messagess_div"></div>
+
+<div id="complaint_div"></div>
+
+<div id="post_form_div"></div>
+
+<div id="overlay"></div>
+
+<div id="media_content_div"></div>
+
+{% endblock %}

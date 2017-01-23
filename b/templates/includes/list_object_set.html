@@ -1,0 +1,133 @@
+{% load bbcode_tags %}
+{% load thumbnail %}
+
+<div class="container-fluid thread_post_set">
+    <div class="post" id='thread_{{t.thread_id}}'>
+    <div class="row post_head" id='head_{{t.thread_id}}'>
+        <div class="col-md-8 col-sm-8 col-xs-9">
+            <h5>
+                <span class="anon">Анонимус</span>  
+                {{ t.thread_date|date:"l d M Y" }}
+                  № <a class="id_link" id="{{t.thread_id}}" pk="{{t.pk}}">{{ t.thread_id }}</a>
+                    <span class="glyphicon glyphicon-exclamation-sign send_complaint" post="{{t.thread_id}}"></span>
+                <span class="glyphicon glyphicon-minus-sign hide_thread_link" thid='{{t.thread_id}}' hide='false'></span>                
+            </h5>
+        </div>
+        <span class="col-md-2 col-sm3 col-xs-3">
+            <h5 class='entry'>
+                <a href="{% url 'detail_thread' t.pk %}" >Вкатится</a>
+            </h5>
+        </span>
+    </div>
+
+        <div class="row post_content" id='content_{{t.thread_id}}'>
+            <span class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                <a href="{{t.thread_media.url}}" class="media_content">
+                    <img src="{{ t.thread_media|thumbnail_url:'list' }}" class="thread_img">
+                </a>    
+            </span>
+            <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9" id='st_{{t.thread_id}}'>
+                {{ t.thread_text|bbcode|safe|truncatewords:50 }}
+                {% if t.thread_text|wordcount > 50 %}
+                    <a class="short_text" tid='{{t.thread_id}}'>Показать полностью</a>
+                {% endif %}
+            </span>
+            <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9 ftext" id='ft_{{t.thread_id}}'>
+                {{ t.thread_text|bbcode|safe }}
+            </span>        
+        </div>
+        <div class="row responses">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h5 id="res_{{q.post_id}}">
+                    {% if t.responses_set.all %}
+                        Ответы:
+                        {% for j in t.responses_set.all %}
+                            <a href=#{{j}} class="link_show_thread" conid='{{j}}'>>>{{j}}</a>
+                        {% endfor %}
+                    {% endif %}    
+                </h5>
+            </div>    
+        </div>
+    </div>
+
+    <div class="container-fluid post_list" id='post_list_{{t.thread_id}}'>
+
+        {% for q in t.post_set.all %}
+            
+            {% if forloop.revcounter not in three_two_one %}
+
+            {% else %}
+            {% if q.post_visible == False %}
+                <div class="row hidden">
+            {% else %}
+                <div class="row post" id='post_{{q.post_id}}'>
+            {% endif %} 
+
+            <div class="row post_head">
+                <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h5>
+                    <span class="anon">
+                        {% if q.post_sage %}
+                            <span class="sage">
+                                Анонимус
+                            </span>
+                        {% else %}
+                            Анонимус
+                        {% endif %}
+                    </span>                              
+                    {{ q.post_date|date:"l d M Y" }}
+                    {% if q.post_write_op %}
+                        <span class="op">#OP</span>
+                    {% endif %}
+                     №<a pk="{{q.pk}}" id='{{q.post_id}}' class="id_link" >
+                        {{ q.post_id }}
+                     </a>
+                <span class="glyphicon glyphicon-exclamation-sign send_complaint" post="{{t.thread_id}}"></span>
+                </h5>                           
+                </span>
+            </div>
+
+            {% if q.post_media %}
+                <span class="col-xs-12 col-sm-4 col-md-3 col-lg-3 post_content">
+                    <a href="{{q.post_media.url}}" class="media_content">
+                        <img src="{{ q.post_media|thumbnail_url:'list' }}" class="post_img">
+                    </a>    
+                </span>
+                <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                    {{ q.post_text|bbcode|safe }}
+                </span>
+            {% else %}
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 post_content">
+                    <p class="post_text post_text_detail">{{ q.post_text|bbcode|safe }}</p>
+                </div> 
+            {% endif %}
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <h5 id="res_{{q.post_id}}">
+                        {% if q.responses_set.all %}
+                            Ответы:
+                            {% for j in q.responses_set.all %}
+                                <a href=#{{j}} class="link_show_thread" conid='{{j}}'>>>{{j}}</a>
+                            {% endfor %}
+                        {% endif %}    
+                    </h5>
+                </div>    
+            </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h5>
+                Всего постов: {{t.post_set.count}}   <a href="{% url 'detail_thread' t.pk %}" >Подробнее...</a>
+            </h5>
+        </div>
+    </div>
+
+
+</div>
+
+</div>
+<hr>

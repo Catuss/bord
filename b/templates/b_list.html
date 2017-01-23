@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+{% load thumbnail %}
+{% load bbcode_tags %}
+
+{% block title %}/b/ - Main page{% endblock %}
+
+{% block main %}
+
+<div class="row">
+    <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="b_logo">
+        <h2>/b/ - List logo</h2>
+    	<hr>
+    </span>
+</div>
+
+<div class="row">    
+    <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="b_create">
+        <span id='create_form_link'><<показать\скрыть форму постинга>></span>
+			<form action="" method="post" enctype="multipart/form-data" id='create_form'>
+				{% csrf_token %}
+			    <label for="id_thread_text" class="create_label">
+			    	{{form.thread_text.label}}
+			    </label>
+			    {{form.thread_text}}
+			    <label for="id_thread_media" class="create_label">
+			    	{{form.thread_media.label}}
+			    </label>
+			    {{form.thread_media}}
+			    <input type="submit" value="Создать" id='create_subm'>
+			</form>
+    </span>
+</div>
+
+<hr>
+
+{% for t in thread %}
+	{% include 'includes/list_object_set.html' %}
+{% endfor %}
+
+{% include 'generic/pagination.html' %}
+
+{% endblock %}

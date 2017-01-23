@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+{% load bbcode_tags %}
+{% block title %}/b/ - Разметка текста{% endblock %}
+
+{% block main %} 
+
+<div class="row">
+	<span class="col-xs-6">{{s}}</span>
+	<span class="col-xs-6">{{s|bbcode|safe}}</span>
+</div>
+<hr>
+<div class="row">
+	<span class="col-xs-6">{{b}}</span>
+	<span class="col-xs-6">{{b|bbcode|safe}}</span>
+</div>
+<hr>
+<div class="row">
+	<span class="col-xs-6">{{u}}</span>
+	<span class="col-xs-6">{{u|bbcode|safe}}</span>
+</div>
+<hr>
+<div class="row">
+	<span class="col-xs-6">{{i}}</span>
+	<span class="col-xs-6">{{i|bbcode|safe}}</span>
+</div>
+<hr>
+<div class="row">
+	<span class="col-xs-6">{{green}}</span>
+	<span class="col-xs-6">{{green|bbcode|safe}}</span>
+</div>
+<hr>
+<div class="row">
+	<span class="col-xs-6">{{spoiler}}</span>
+	<span class="col-xs-6">{{spoiler|bbcode|safe}}</span>
+</div>
+<hr>
+<h4>И другие</h4>
+{% endblock %}

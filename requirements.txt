@@ -1,0 +1,5 @@
+django==1.10
+pillow==3.4.2
+django-precise-bbcode==1.2.6
+easy-thumbnails==2.3
+

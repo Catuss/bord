@@ -1,0 +1,66 @@
+{% load bbcode_tags %}
+{% load thumbnail %}
+
+{% for qs in thread.post_set.all %}
+    {% if qs.post_visible == False %}
+<div class="row hidden">
+    {% else %}
+<div class="row post">
+    {% endif %}    
+
+    <div class="row post_head">
+        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h5>
+                <span class="anon">
+                    {% if qs.post_sage %}
+                        <span class="sage">
+                            Анонимус
+                        </span>
+                    {% else %}
+                        Анонимус
+                    {% endif %}
+                </span>                              
+                {{ qs.post_date|date:"l d M Y" }}
+                {% if qs.post_write_op %}
+                    <span class="op">#OP</span>
+                {% endif %}
+                 №<a id='{{qs.post_id}}' class="id_link" >
+                    {{ qs.post_id }}
+                 </a>
+            <span class="glyphicon glyphicon-exclamation-sign send_complaint" post="{{qs.post_id}}"></span>
+            </h5>
+        </span>
+    </div>
+
+    <div class="row post_content">
+        {% if qs.post_media %}
+            <span class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                <a href="{{qs.post_media.url}}" class="media_content">
+                    <img src="{{ qs.post_media|thumbnail_url:'list' }}" class="post_img">
+                </a>    
+            </span>
+            <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                {{ qs.post_text|bbcode|safe }}
+            </span>
+        {% else %}
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <p class="post_text post_text_detail">{{ qs.post_text|bbcode|safe }}</p>
+            </div> 
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h5 id="res_{{qs.post_id}}">
+                {% if qs.responses_set.all %}
+                    Ответы:
+                    {% for j in qs.responses_set.all %}
+                        <a href=#{{j}} class="link_show_thread" conid='{{j}}'>>>{{j}}</a>
+                    {% endfor %}
+                {% endif %}    
+            </h5>
+        </div>    
+    </div>
+
+</div>
+{% endfor %}

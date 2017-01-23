@@ -1,0 +1,70 @@
+{# Шаблон для всплывающих постов\тредов #}
+
+{% load bbcode_tags %}
+{% load thumbnail %}
+
+<div class="post pop_post">
+
+    <div class="post_head">
+        <h5>
+            <span class="pop_close" pid='{{qs.post_id}}{{qs.thread_id}}'>X</span>
+            <span class="anon">
+                {% if qs.post_sage %}
+                    <span class="sage">
+                        Анонимус
+                    </span>
+                {% else %}
+                    Анонимус
+                {% endif %}
+            </span>      
+            {{ qs.thread_date|date:"l d M Y" }}                        
+            {{ qs.post_date|date:"l d M Y" }}
+            {% if qs.post_write_op %}
+                <span class="op">#OP</span>
+            {% endif %}
+             №<a id='{{qs.post_id}}{{qs.thread_id}}' class="id_link" >
+                {{ qs.post_id }}
+                {{ qs.thread_id }}
+             </a>
+        <span class="glyphicon glyphicon-exclamation-sign send_complaint" post="{{qs.thread_id}}{{qs.post_id}}"></span>
+        </h5>                
+    </div>
+
+    <div class="post_content_">
+        {% if qs.post_media %}
+            <span class="pop_content_left">
+                <a href="{{qs.post_media.url}}" class="media_content">
+                    <img src="{{ qs.post_media|thumbnail_url:'list' }}" class="post_img">
+                </a>
+        {% elif qs.thread_media %}
+            <span class="pop_content_left">
+                <a href="{{qs.thread_media.url}}" class="media_content">
+                    <img src="{{ qs.thread_media|thumbnail_url:'list' }}" class="post_img">
+                </a>
+            </span>    
+            <span class="pop_content_right">
+                {{ qs.post_text|bbcode|safe }}
+                {{ qs.thread_text|bbcode|safe }}
+            </span>
+        {% else %}
+            <div class="pop_only_text">
+                <p class="post_text post_text_detail">
+                    {{ qs.post_text|bbcode|safe }} 
+                    {{ qs.thread_text|bbcode|safe }}
+                </p>
+            </div> 
+        {% endif %}
+    </div>
+
+    <div>
+        <h5 id="res_{{qs.responses_set.all}}">
+            {% if qs.responses_set.all %}
+            Ответы: 
+            {% for j in qs.responses_set.all %}
+                <a href=#{{j}} class="link_pop_thread" conid='{{j}}'>>>{{j}}</a>
+            {% endfor %}
+            {% endif %}
+        </h5>
+    </div>
+
+</div>

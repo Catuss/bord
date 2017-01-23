@@ -1,0 +1,36 @@
+<span class="close">X</span>
+<form action="" method="post" enctype="multipart/form-data" id='posting_form'>
+
+    {% csrf_token %}
+
+    <label for="id_post_text">
+    	{{form.post_text.label}}
+    </label>
+	<div>
+		{{form.post_text}}
+	</div>
+
+	<label for="id_post_res"></label>
+		<span class="hidden">
+			{{form.post_res}}
+		</span>
+	<label for="id_post_media">
+		{{form.post_media.label}}
+	</label>	
+	<span>
+		{{form.post_media}}
+	</span>
+	<label for="id_sage">
+		{{form.sage.label}}
+	</label>
+		<span>
+			{{form.sage}}
+		</span>
+	<label for="id_op">
+		{{form.op.label}}
+	</label>
+		<span>
+			{{form.op}}
+		</span>
+		<button id=subm_post_form>Отправить</button>
+</form>

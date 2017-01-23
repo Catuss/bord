@@ -1,0 +1,13 @@
+
+<form  id='comp_form'>
+{% csrf_token %}
+	{{errors}}
+	<span class="label label-primary" target='id_complaint_text'> 
+		{{form.complaint_text.label}}
+	</span>
+	<div class="control">
+		{{form.complaint_text}}
+	</div>
+	{{form.complaint_target}}
+	<input type="submit" value="Стучать">
+</form>
